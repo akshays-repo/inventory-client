@@ -1,6 +1,6 @@
-import type { NextPage } from "next";
+import type { NextPage } from 'next'
 
-import styles from "../styles/Home.module.css";
+import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
   return (
@@ -68,7 +68,7 @@ const Home: NextPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

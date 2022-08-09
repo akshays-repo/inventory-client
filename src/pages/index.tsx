@@ -9,10 +9,10 @@ const Home: NextPage = () => {
   return (
     <div>
       <MetaHeader />
-      
+
       <HomePage />
     </div>
   )
 }
 
-export default Home;
+export default Home

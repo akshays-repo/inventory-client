@@ -1,5 +1,6 @@
 import { GoogleOAuthProvider } from '@react-oauth/google'
-import LoginWithGoogleButton from '../../components/LoginWithGoogleButton/LoginWithGoogle'
+import LoginWithGoogleButton from './LoginWithGoogle'
+
 const AppAuth = () => {
   return (
     <div>

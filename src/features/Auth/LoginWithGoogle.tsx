@@ -1,25 +1,28 @@
-import React from 'react'
-import {
-  GoogleLogin,
-  GoogleOAuthProvider,
-  useGoogleLogin,
-} from '@react-oauth/google'
-import { googleApi } from '../../lib/googleApi'
+import { useGoogleLogin } from '@react-oauth/google'
+import { useRouter } from 'next/router'
+import { AppAuthentication } from '../../lib/authentication'
+import { authApi } from './auth.api'
 
 const LoginWithGoogleButton = () => {
+  const appAuth = new AppAuthentication()
+  const router = useRouter()
+
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       console.log(tokenResponse)
       if (tokenResponse.access_token) {
-        const tokens = await googleApi(tokenResponse.access_token.toString())
-        if (!tokens) {
-          alert('Error while logging in w/Google 1 ')
+        const token = await authApi(tokenResponse.access_token.toString())
+        if (token?.accessToken) {
+          appAuth.setUserToken(token.accessToken)
+          // const returnUrl = router.query.returnUrl || '/'
+          window.location.href = '/'
         } else {
-          alert(tokens)
+          alert('Sorry Something went wrong')
         }
       }
     },
   })
+
   return (
     <button
       onClick={() => login()}

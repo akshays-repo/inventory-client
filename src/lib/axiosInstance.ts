@@ -14,7 +14,7 @@ import {
 
 export class axiosInstance {
   private static instance: axiosInstance
-  private appAuth = AppAuthentication.getInstance()
+  private appAuth = new AppAuthentication()
 
   public static getInstance(): axiosInstance {
     if (!this.instance) {

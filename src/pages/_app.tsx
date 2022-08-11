@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isUserLogined, setisUserLogined] = useState(false)
   useEffect(() => {
     // run auth check on initial load
-    const appAuth = AppAuthentication.getInstance()
+    const appAuth = new AppAuthentication()
 
     setisUserLogined(appAuth.isUserLogined())
 

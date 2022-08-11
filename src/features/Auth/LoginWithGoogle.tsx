@@ -5,7 +5,7 @@ import { authApi } from './auth.api'
 
 const LoginWithGoogleButton = () => {
   const appAuth = new AppAuthentication()
-  const router = useRouter()
+  // const router = useRouter()
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {

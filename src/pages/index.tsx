@@ -1,72 +1,88 @@
 import type { NextPage } from 'next'
+// import GoogleLogin from 'react-google-login'
+import { googleApi } from '../lib/googleApi'
+import {
+  GoogleLogin,
+  GoogleOAuthProvider,
+  useGoogleLogin,
+} from '@react-oauth/google'
 
 import styles from '../styles/Home.module.css'
 
+const CustomButton = () => {
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log(tokenResponse)
+      if (tokenResponse.access_token) {
+        const tokens = await googleApi(tokenResponse.access_token.toString())
+        if (!tokens) {
+          alert('Error while logging in w/Google 1 ')
+        } else {
+          alert(tokens)
+        }
+      }
+    },
+  })
+  return <button onClick={() => login()}>Login button</button>
+}
+
 const Home: NextPage = () => {
+  // const googleLogin = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     console.log(tokenResponse)
+  //     // const tokens = await googleApi(credentialResponse)
+  //     // if (!tokens) {
+  //     //   alert('Error while logging in w/Google 1 ')
+  //     // } else {
+  //     //   alert(tokens)
+  //     // }
+  //   },
+  //   onError: (errorResponse) => console.log(errorResponse),
+  // })
   return (
     <div className={styles.container}>
-      <div className="relative min-h-screen flex items-center justify-center bg-gray-900 overflow-hidden">
-        <div className="grid-background absolute inset-0 p-2 grid grid-cols-12 gap-2 transform -skew-y-12 scale-150">
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-5 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-1 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-4 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-5 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-3 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-4 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-7 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-1 bg-gray-800 rounded animate-pulse"></div>
+      <GoogleOAuthProvider clientId="331290056902-i949kh9as7vvpd7ahgh9rv43f6ok3pra.apps.googleusercontent.com">
+        <div className="">
+          <h1>Login With Google</h1>
 
-          <div className="col-span-4 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-5 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-1 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-4 bg-gray-800 rounded animate-pulse"></div>
-
-          <div className="col-span-4 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-7 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-1 bg-gray-800 rounded animate-pulse"></div>
-
-          <div className="col-span-5 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-1 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-3 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-3 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-2 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-5 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-1 bg-gray-800 rounded animate-pulse"></div>
-          <div className="col-span-4 bg-gray-800 rounded animate-pulse"></div>
+          <CustomButton />
+          {/* <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              console.log(credentialResponse)
+              const tokens = await googleApi(credentialResponse)
+              if (!tokens) {
+                alert('Error while logging in w/Google 1 ')
+              } else {
+                alert(tokens)
+              }
+            }}
+            onError={() => {
+              console.log('Login Failed')
+            }}
+          /> */}
+          {/* <GoogleLogin
+            clientId={
+              '331290056902-i949kh9as7vvpd7ahgh9rv43f6ok3pra.apps.googleusercontent.com'
+            }
+            buttonText="Login with Google"
+            onSuccess={async (response) => {
+              console.log('google response', { response })
+              const tokens = await googleApi(response)
+              if (!tokens) {
+                alert('Error while logging in w/Google 1 ')
+              } else {
+                // put login logic (i.e. navigating to dashboard page, fetching user from backend
+                // using the new access token, etc
+              }
+            }}
+            onFailure={(response) => {
+              console.log('failur', response)
+              alert(response)
+            }}
+            cookiePolicy={'single_host_origin'}
+          /> */}
         </div>
-
-        <div className="relative">
-          <h2 className="text-white text-4xl md:text-8xl font-bold flex flex-row items-center">
-            Coming
-            <div className="relative text-sm mx-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-caret-up-fill text-blue-500"
-                viewBox="0 0 16 16"
-              >
-                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
-              </svg>
-              <div className="absolute -top-12 transform -rotate-45 text-blue-500">
-                <p className="font-light text-base text-white bg-blue-500 rounded-md px-2 py-0">
-                  super
-                </p>
-              </div>
-            </div>
-            Soon
-          </h2>
-        </div>
-      </div>
+      </GoogleOAuthProvider>
     </div>
   )
 }

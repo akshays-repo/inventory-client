@@ -11,6 +11,12 @@ import {
 import { useMediaQuery } from 'react-responsive'
 import classNames from 'classnames'
 import Link from 'next/link'
+import { AppAuthentication } from '../../lib/authentication'
+
+const handleLogout = () => {
+  const appAuth = new AppAuthentication()
+  appAuth.logout()
+}
 
 const SideNavbar = () => {
   const isTabletOrMobileDevice = useMediaQuery({
@@ -71,37 +77,37 @@ const SideNavbar = () => {
             <h1 className="text-base text-center cursor-pointer font-bold text-blue-900 border-b border-gray-100 pb-4 w-full">
               Inventory Dashboard
             </h1>
-           
+
             <div className=" my-4 border-b border-gray-100 pb-4">
-            <Link href="/">
-                  <a>
-              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  {!isTabletOrMobileDevice ? ' Home ' : ''}{' '}
-                </h3>
-              </div>
-              </a>
+              <Link href="/">
+                <a>
+                  <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                    <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
+                    <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                      {!isTabletOrMobileDevice ? ' Home ' : ''}{' '}
+                    </h3>
+                  </div>
+                </a>
               </Link>
               <Link href="/item">
-                  <a>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <MdOutlineShoppingBag className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  {!isTabletOrMobileDevice ? ' Items ' : ''}{' '}
-                </h3>
-              </div>
-              </a>
+                <a>
+                  <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                    <MdOutlineShoppingBag className="text-2xl text-gray-600 group-hover:text-white " />
+                    <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                      {!isTabletOrMobileDevice ? ' Items ' : ''}{' '}
+                    </h3>
+                  </div>
+                </a>
               </Link>
               <Link href="/">
-                  <a>
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <MdSearch className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  {!isTabletOrMobileDevice ? ' Search ' : ''}{' '}
-                </h3>
-              </div>
-              </a>
+                <a>
+                  <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                    <MdSearch className="text-2xl text-gray-600 group-hover:text-white " />
+                    <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                      {!isTabletOrMobileDevice ? ' Search ' : ''}{' '}
+                    </h3>
+                  </div>
+                </a>
               </Link>
             </div>
             {/* setting  */}
@@ -120,7 +126,12 @@ const SideNavbar = () => {
               </div>
             </div>
             {/* logout */}
-            <div className=" m-4 absolute inset-x-0 bottom-0">
+            <div
+              className=" m-4 absolute inset-x-0 bottom-0"
+              onClick={() => {
+                handleLogout()
+              }}
+            >
               <div className="flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200  hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <MdOutlineLogout className="text-2xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">

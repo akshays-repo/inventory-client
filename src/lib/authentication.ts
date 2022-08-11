@@ -35,4 +35,9 @@ export class AppAuthentication {
       return false
     }
   }
+
+  logout = () => {
+    localStorage.clear()
+    window.location.href = '/loginA'
+  }
 }

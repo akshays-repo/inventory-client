@@ -5,10 +5,10 @@ type Props = {
 }
 
 const AppLayout = ({ children }: Props) => {
+  console.log('Layout rendered')
   return (
     <div>
       <nav>
-    
         <SideNavbar />
       </nav>
       <main>{children}</main>

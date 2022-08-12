@@ -1,18 +1,27 @@
-import type { NextPage } from 'next'
-import { useMediaQuery } from 'react-responsive'
-import MetaHeader from '../components/MetaHeader'
-import HomePage from '../container/Homepage.tsx/indext'
-import withAuth from '../hoc/withAuth'
+// ** MUI Imports
+import Grid from '@mui/material/Grid'
 
-const Home: NextPage = () => {
-  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+// ** Styled Component Import
+import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
+// ** Demo Components Imports
+import withAuth from 'src/hoc/withAuth'
+import StatisticsCard from 'src/views/dashboard/StatisticsCard'
+import Table from 'src/views/dashboard/Table'
+
+const Dashboard = () => {
   return (
-    <div>
-      <MetaHeader />
-      <HomePage />
-    </div>
+    <ApexChartWrapper>
+      <Grid container spacing={6}>
+        <Grid item xs={12} md={12}>
+          <StatisticsCard />
+        </Grid>
+        <Grid item xs={12}>
+          <Table />
+        </Grid>
+      </Grid>
+    </ApexChartWrapper>
   )
 }
 
-export default withAuth(Home)
+export default withAuth(Dashboard)

@@ -1,19 +1,18 @@
-import { NextComponentType } from 'next'
-import { BaseContext } from 'next/dist/shared/lib/utils'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import AppLayout from '../components/layout'
-import AppAuth from '../features/Auth/Auth'
-import { AppAuthentication } from '../lib/authentication'
 import Router from 'next/router'
 import NProgress from 'nprogress'
+import { AppAuthentication } from 'src/@core/utils/authentication'
+import { NextComponentType } from 'next/dist/shared/lib/utils'
+
 function withAuth(Component: NextComponentType) {
-  Router.events.on('routeChangeStart', (url) => {
+  Router.events.on('routeChangeStart', url => {
     console.log(`Loading: ${url}`)
     NProgress.start()
   })
   Router.events.on('routeChangeComplete', () => NProgress.done())
   Router.events.on('routeChangeError', () => NProgress.done())
+
   const Auth = (props: any) => {
     const { asPath } = useRouter()
     const [authState, setAuthState] = useState<'s' | 'l' | 'f'>('l')
@@ -36,7 +35,9 @@ function withAuth(Component: NextComponentType) {
     }
 
     if (authState === 'f') {
-      return <AppAuth />
+      Router.push('/login')
+
+      return ''
     }
 
     if (authState === 'l') {
@@ -44,18 +45,17 @@ function withAuth(Component: NextComponentType) {
     }
 
     if (authState === 's') {
-      return (
-        <AppLayout>
-          <Component {...props} />
-        </AppLayout>
-      )
+      return <Component {...props} />
     }
+
     return <h2>Something went wrong</h2>
   }
+
   // Copy getInitial props so it will run as well
   if (Component.getInitialProps) {
     Auth.getInitialProps = Component.getInitialProps
   }
+
   return Auth
 }
 export default withAuth

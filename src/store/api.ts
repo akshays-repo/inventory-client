@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { AppAuthentication } from 'src/@core/utils/authentication'
 
 export interface Post {
   id: string
@@ -7,16 +8,25 @@ export interface Post {
 
 type PostsResponse = Post[]
 
+export const baseQuery = fetchBaseQuery({
+  baseUrl: process.env.NEXT_PUBLIC_API_GATEWAY,
+  prepareHeaders: headers => {
+    const token = new AppAuthentication().getUserToken()
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+
+    return headers
+  }
+})
+
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: '/' }),
+  baseQuery,
   tagTypes: ['Post'],
   endpoints: build => ({
     getPosts: build.query<PostsResponse, void>({
       query: () => 'posts',
-      providesTags: result =>
-        result
-          ? [...result.map(({ id }) => ({ type: 'Post' as const, id })), { type: 'Post', id: 'LIST' }]
-          : [{ type: 'Post', id: 'LIST' }]
+      providesTags: ['Post']
     }),
 
     addPost: build.mutation<Post, Partial<Post>>({

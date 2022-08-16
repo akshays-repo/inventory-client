@@ -7,7 +7,7 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 // ** Demo Components Imports
 import withAuth from 'src/hoc/withAuth'
 import StatisticsCard from 'src/views/dashboard/StatisticsCard'
-import Table from 'src/views/dashboard/Table'
+import Folders from './folders'
 
 const Dashboard = () => {
   return (
@@ -17,7 +17,8 @@ const Dashboard = () => {
           <StatisticsCard />
         </Grid>
         <Grid item xs={12}>
-          <Table />
+          {/* <Table /> */}
+          <Folders />
         </Grid>
       </Grid>
     </ApexChartWrapper>

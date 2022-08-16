@@ -1,6 +1,6 @@
-import ItemFeature from 'src/features/Items'
+import ItemDetails from 'src/features/ItemDetails'
 
 const Items = () => {
-  return <ItemFeature />
+  return <ItemDetails />
 }
 export default Items

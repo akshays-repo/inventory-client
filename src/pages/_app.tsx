@@ -1,9 +1,15 @@
 // ** Next Imports
 import Head from 'next/head'
-import { Router } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
+import Typography from '@mui/material/Typography'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from '@mui/material/Link'
+import Home from 'mdi-material-ui/Home'
+import FolderPlus from 'mdi-material-ui/FolderPlus'
+import CartMinus from 'mdi-material-ui/CartMinus'
 
 // ** Loader Import
 import NProgress from 'nprogress'
@@ -31,6 +37,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 // ** Global css styles
 import '../../styles/globals.css'
 import { store } from 'src/store'
+import { useEffect, useState } from 'react'
+import { Card } from '@mui/material'
 
 // ** Extend App Props with Emotion
 type ExtendedAppProps = AppProps & {
@@ -53,8 +61,62 @@ if (themeConfig.routingLoader) {
   })
 }
 
+const BreadCrum = () => {
+  return (
+    <Card sx={{ my: '10px', padding: '10px' }}>
+      <Breadcrumbs aria-label='breadcrumb'>
+        <Link underline='hover' sx={{ display: 'flex', alignItems: 'center' }} color='inherit' href='/'>
+          <Home />
+          <div className='m-2'>Home </div>
+        </Link>
+        <Link
+          underline='hover'
+          sx={{ display: 'flex', alignItems: 'center' }}
+          color='inherit'
+          href='/material-ui/getting-started/installation/'
+        >
+          <FolderPlus />
+          <div className='m-2'>Folder </div>
+        </Link>
+        <Typography sx={{ display: 'flex', alignItems: 'center' }} color='text.primary'>
+          <CartMinus />
+          <div className='m-2'>Product </div>
+        </Typography>
+      </Breadcrumbs>
+    </Card>
+  )
+}
+
 // ** Configure JSS & ClassName
 const App = (props: ExtendedAppProps) => {
+  const router = useRouter()
+  const [breadcrumbs, setBreadcrumbs] = useState<
+    {
+      href: string
+      label: string
+    }[]
+  >([])
+
+  useEffect(() => {
+    const pathWithoutQuery = router.asPath.split('?')[0]
+    let pathArray = pathWithoutQuery.split('/')
+    pathArray.shift()
+
+    pathArray = pathArray.filter(path => path !== '')
+
+    const breadcrumbs = pathArray.map((path, index) => {
+      const href = '/' + pathArray.slice(0, index + 1).join('/')
+
+      return {
+        href,
+        label: path.charAt(0).toUpperCase() + path.slice(1)
+      }
+    })
+
+    setBreadcrumbs(breadcrumbs)
+    console.log({ breadcrumbs })
+  }, [router.asPath])
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   // Variables
@@ -76,7 +138,16 @@ const App = (props: ExtendedAppProps) => {
         <SettingsProvider>
           <SettingsConsumer>
             {({ settings }) => {
-              return <ThemeComponent settings={settings}>{getLayout(<Component {...pageProps} />)}</ThemeComponent>
+              return (
+                <ThemeComponent settings={settings}>
+                  {getLayout(
+                    <>
+                      {/* <BreadCrum /> */}
+                      <Component {...pageProps} />
+                    </>
+                  )}
+                </ThemeComponent>
+              )
             }}
           </SettingsConsumer>
         </SettingsProvider>

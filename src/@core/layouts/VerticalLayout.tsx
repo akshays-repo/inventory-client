@@ -10,14 +10,15 @@ import Box, { BoxProps } from '@mui/material/Box'
 import ArrowUp from 'mdi-material-ui/ArrowUp'
 
 // ** Theme Config Import
-import themeConfig from 'src/configs/themeConfig'
+// import themeConfig from 'src/configs/themeConfig'
 
 // ** Type Import
 import { LayoutProps } from 'src/@core/layouts/types'
 
 // ** Components
 import AppBar from './components/vertical/appBar'
-import Navigation from './components/vertical/navigation'
+
+// import Navigation from './components/vertical/navigation'
 import Footer from './components/shared-components/footer'
 import ScrollToTop from 'src/@core/components/scroll-to-top'
 
@@ -54,7 +55,8 @@ const VerticalLayout = (props: LayoutProps) => {
 
   // ** Vars
   const { contentWidth } = settings
-  const navWidth = themeConfig.navigationSize
+
+  // const navWidth = themeConfig.navigationSize
 
   // ** States
   const [navVisible, setNavVisible] = useState<boolean>(false)
@@ -66,13 +68,13 @@ const VerticalLayout = (props: LayoutProps) => {
     <>
       <VerticalLayoutWrapper className='layout-wrapper'>
         {/* Navigation Menu */}
-        <Navigation
+        {/* <Navigation
           navWidth={navWidth}
           navVisible={navVisible}
           setNavVisible={setNavVisible}
           toggleNavVisibility={toggleNavVisibility}
           {...props}
-        />
+        /> */}
         <MainContentWrapper className='layout-content-wrapper'>
           {/* AppBar Component */}
           <AppBar toggleNavVisibility={toggleNavVisibility} {...props} />

@@ -1,6 +1,10 @@
+import { useRouter } from 'next/router'
 import ItemDetails from 'src/features/ItemDetails'
 
 const Items = () => {
-  return <ItemDetails />
+  const router = useRouter()
+  const { id } = router.query
+
+  return <ItemDetails slug={id as string} />
 }
 export default Items

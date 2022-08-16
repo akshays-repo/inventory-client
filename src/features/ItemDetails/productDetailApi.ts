@@ -7,16 +7,16 @@ export const productDetailsApi = createApi({
   baseQuery,
   tagTypes: ['ProductDetail'],
   endpoints: build => ({
-    getProductDetails: build.query<ProductDetails[], string>({
+    getProductDetails: build.query<ProductDetails, string>({
       query: slug => `/products/slug/${slug}`
     }),
-    getAllocatedStocks: build.query<AllocatedDetails[], string>({
-      query: slug => `allocated/${slug}`,
+    getAllocatedStocks: build.query<AllocatedDetails, string>({
+      query: slug => `stocks/allocated/${slug}`,
       providesTags: ['ProductDetail']
     }),
 
-    getConsumableStocks: build.query<ConsumableDetails[], string>({
-      query: slug => `consumable/${slug}`,
+    getConsumableStocks: build.query<ConsumableDetails, string>({
+      query: slug => `stocks/consumable/${slug}`,
       providesTags: ['ProductDetail']
     })
   })

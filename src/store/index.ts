@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { folderApi } from 'src/features/Folders/folderApi'
+import { productSearchApi } from 'src/features/ProductAutoComplete/api'
 import exampleSlice from './example.slice'
 
 export const store = configureStore({
   reducer: {
     example: exampleSlice,
-    [folderApi.reducerPath]: folderApi.reducer
+    [folderApi.reducerPath]: folderApi.reducer,
+    [productSearchApi.reducerPath]: productSearchApi.reducer
   }
 })
 

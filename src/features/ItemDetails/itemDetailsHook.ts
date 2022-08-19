@@ -1,5 +1,12 @@
 import { useMemo } from 'react'
-import { useGetAllocatedStocksQuery, useGetConsumableStocksQuery, useGetProductDetailsQuery } from './productDetailApi'
+import {
+  useGetAllocatedStocksQuery,
+  useGetConsumableStocksQuery,
+  useGetProductDetailsQuery,
+  useUpdateAllocatedDetailMutation,
+  useUpdateConsumableDetailMutation,
+  useUpdateProductDetailMutation
+} from './productDetailApi'
 
 export const useProductDetails = (slug: string) => {
   const {
@@ -10,15 +17,25 @@ export const useProductDetails = (slug: string) => {
     isSuccess: productDetailsIsSuccess
   } = useGetProductDetailsQuery(slug)
 
+  const [updateProductDetail] = useUpdateProductDetailMutation()
+
   return useMemo(() => {
     return {
       productDetails,
       refetch,
       productDetailsIsSuccess,
       productDetailsIsloading,
+      updateProductDetail,
       lastUpdatedAt: fulfilledTimeStamp
     }
-  }, [productDetails, refetch, productDetailsIsloading, fulfilledTimeStamp, productDetailsIsSuccess])
+  }, [
+    productDetails,
+    refetch,
+    updateProductDetail,
+    productDetailsIsloading,
+    fulfilledTimeStamp,
+    productDetailsIsSuccess
+  ])
 }
 
 export const useConsumableStocks = (slug: string) => {
@@ -29,14 +46,17 @@ export const useConsumableStocks = (slug: string) => {
     fulfilledTimeStamp
   } = useGetConsumableStocksQuery(slug)
 
+  const [updateConsumableDetail] = useUpdateConsumableDetailMutation()
+
   return useMemo(() => {
     return {
       consumableDetails,
       consumableRefetch,
       consumableIsloading,
-      lastUpdatedAt: fulfilledTimeStamp
+      lastUpdatedAt: fulfilledTimeStamp,
+      updateConsumableDetail
     }
-  }, [consumableDetails, consumableRefetch, consumableIsloading, fulfilledTimeStamp])
+  }, [consumableDetails, updateConsumableDetail, consumableRefetch, consumableIsloading, fulfilledTimeStamp])
 }
 
 export const useAllocatedStocks = (slug: string) => {
@@ -44,15 +64,32 @@ export const useAllocatedStocks = (slug: string) => {
     data: allocatedDetails,
     refetch: allocatedDetailsRefetch,
     isLoading: allocatedIsLoading,
-    fulfilledTimeStamp
+    fulfilledTimeStamp,
+    isError: allocatedIsError,
+    isSuccess: allocatedIsSuccess
   } = useGetAllocatedStocksQuery(slug)
+
+  const [updateAllocatedDetail] = useUpdateAllocatedDetailMutation()
+
+  console.log({ allocatedDetails })
 
   return useMemo(() => {
     return {
       allocatedDetails,
       allocatedDetailsRefetch,
       allocatedIsLoading,
-      lastUpdatedAt: fulfilledTimeStamp
+      allocatedIsSuccess,
+      allocatedIsError,
+      lastUpdatedAt: fulfilledTimeStamp,
+      updateAllocatedDetail
     }
-  }, [allocatedDetails, allocatedDetailsRefetch, allocatedIsLoading, fulfilledTimeStamp])
+  }, [
+    allocatedDetails,
+    allocatedDetailsRefetch,
+    allocatedIsLoading,
+    allocatedIsSuccess,
+    allocatedIsError,
+    fulfilledTimeStamp,
+    updateAllocatedDetail
+  ])
 }

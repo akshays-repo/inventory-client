@@ -24,8 +24,8 @@ const ItemDetails: FC<Props> = ({ slug }) => {
   }
 
   return (
-    <Card>
-      {productDetailsIsSuccess && <ProductDetailsForm slug={slug} />}
+    <Card className='p-3'>
+      {productDetailsIsSuccess && productDetails && <ProductDetailsForm slug={slug} productDetails={productDetails} />}
       {productDetailsIsSuccess && typeId === 1 && <AllocatedStocks slug={slug} />}
       {productDetailsIsSuccess && typeId === 2 && <ConsumableDetails slug={slug} />}
     </Card>
